@@ -1,0 +1,11 @@
+---
+- name: play
+  hosts: 192.168.1.85
+  tasks:
+    - name: task
+      lineinfile:                                #replace a line in a file
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^ServerName '                   #we looking for this specific word 
+        insertafter: '^#ServerName '             #if the below is not there or might be commented out
+        line: "ServerName {{ ansible_fqdn }}:80" #add this config using the fqdn of our system 
+ 

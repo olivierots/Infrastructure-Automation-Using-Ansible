@@ -1,0 +1,26 @@
+---
+- name: sshd
+  hosts: all
+  gather_facts: false
+  
+  handlers:                # light task that arent automatically executed & only runs when triggered    
+    - name: restart_sshd
+      systemd:
+        name: sshd.service
+        state: restarted
+
+  tasks:
+     
+    - name: ensure sshd is started and enabled
+      systemd:
+        name: sshd
+        enabled: true    
+        state: started    
+
+    - name: Make sure root login is not permitted over SSH
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^PermitRootLogin'
+        insertafter: '#LoginGraceTime'
+        line: 'PermitRootLogin no'
+      notify: restart_sshd         # trigger the defined handler 

@@ -1,0 +1,24 @@
+---
+- name: play
+  hosts: all
+  become: true
+  gather_facts: false  # no need to connect the data and allow playbook to run quickly
+  
+  tasks:
+    - name: cron
+      cron:
+        name: my cron job entry
+        hour: 11
+        minute: 25
+        job: 'cat /etc/passwd > /tmp/file1'
+        user: root
+        cron_file: mycron   # this file will be created in our /etc/cron.d/ dir
+    
+    - name: at entry
+      at:
+        commend: 'find /usr/share/doc -name "*.pdf" -exec cp {} /tmp/ \;'
+        count: 1
+        units: minutes
+        unique: true
+
+# ansible-doc

@@ -1,0 +1,17 @@
+---
+- name: Ubuntu apche installation 
+  hosts: ubuntu
+  tasks:
+    - name: install apache
+      apt:
+        name: apache2
+        state: latest
+
+- name: Centos apache installation 
+  hosts: centos
+  tasks:
+    - name: install apache
+      yum:
+        name: httpd
+        state: latest
+

@@ -1,0 +1,76 @@
+---
+- name: Deploy a LAMP stack to remote servers (ubuntu & centos distros) 
+  hosts: all
+  gather_facts: false 
+  handlers:
+    - name: restart_web
+      systemd:
+         name: "{{ web_service }}"
+         state: restarted
+ 
+  tasks:
+
+    - name: apache installation 
+      package:                    #with the package module, this will work with both apt & yum
+        name: "{{ web_package }}"
+        state: latest
+
+    - name: Set the "ServerName" directive, these variables are set under group_vars
+      lineinfile:
+         path: "{{ web_path }}"
+         regexp: '^ServerName'
+         insertafter: '^#ServerName'
+         line: "ServerName {{ ansible_fqdn }}:80"
+      notify: restart_web
+     
+    - name: Secure the Document Root file
+      file:                      # module used to delete files and set perm.
+        path: '/var/www/html'
+        mode: '3750'
+        owner: 'root'
+        group: "{{ web_group }}"
+    
+    - name: index for our home page
+      copy:
+        content: "Welcome to {{ ansible_fqdn }} \n"
+        dest: '/var/www/html/index.html'
+        mode: '640'
+        group: "{{ web_group }}"
+
+    - name: configure firewalld for centos 
+      systemd:
+        name: firewalld
+        state: started
+        enabled: true
+      when: ansible_distribution == 'CentOS'
+
+    - name: open up the firewall port for http on centos
+      firewalld:
+        service: http
+        permanent: true    #make the config permanent
+        immediate: true    #runtime config
+        state: enabled     # enable http in both our runtime & perm state 
+      when: ansible_distribution == 'CentOS'
+
+    - name: confure ufw for ubuntu
+      systemd:
+        name: ufw
+        state: started
+        enabled: true
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: open up the firewall port for http & ssh on ubuntu using a loop
+      ufw:
+        port: "{{ item }}"     #loop to open for http and ssh
+        rule: allow
+        state: enabled         #enable http in both our runtime & perm state
+      when: ansible_distribution == 'Ubuntu'
+      loop: 
+        - ssh
+        - http
+ 
+    - name: enable apache
+      systemd:
+        name: "{{ web_package }}"
+        state: started
+        enabled: true

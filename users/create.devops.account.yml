@@ -1,0 +1,23 @@
+---
+- name: Deploy a dedicated DevOps user account which makes more sense
+  hosts: all
+  become: true
+  tasks:
+
+    - name: create DevOps user
+      user:
+        name: devops
+
+    - name: set up the sudo access
+      copy:
+        dest: /etc/sudoers.d/devops                 # create a file called devops
+        content: 'devops ALL=(ALL) NOPASSWD: ALL'   # put this content in the devops file to add passwordless access for the user
+        validate: /usr/sbin/visudo -cf %s           # check / validate the file is OK & the string passed in is OK
+
+    - name: ssh access set-up
+      authorized_key:
+        user: devops
+        state: present                              # make sure the user is present
+        manage_dir: true                            # create the .ssh dir and file if necessary
+        key: "{{ lookup( 'file', '/home/jenkins/.ssh/id_rsa.pub') }}"    # copy ssh pub keys to the remote devops account
+        

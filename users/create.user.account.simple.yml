@@ -1,0 +1,29 @@
+---
+- name: create user
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: create user
+      user:
+        name: "{{ user_name }}"
+        password: "{{ 'password1' | password_hash('sha512','AS343') }}" # password_encrytion algo, AS343 is random
+        update_password: on_create                                      # set the password on the user creation so its not changed later for my testing purposes
+      when: user_create == 'yes'                                        # assignment operator / option when running the command
+    
+    - name: delete user
+      user:
+        name: "{{ user_name }}"
+        state: absent
+        remove: true
+      when: user_create == 'no'   
+        
+
+
+
+# create user ==> ansible-playbook -e "user_create=yes user_name=bob" create_users.yml
+# delete user ==> ansible-playbook -e "user_create=no user_name=bob" create_users.yml
+
+
+
+

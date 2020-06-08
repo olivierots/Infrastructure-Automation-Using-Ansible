@@ -1,0 +1,7 @@
+---
+- name: deploy lamp 
+  hosts: all
+  roles:
+    - apache
+    - php
+    - mariadb

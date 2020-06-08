@@ -1,0 +1,26 @@
+---
+- name: Manage user
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: task to include a variable file for the password
+      include_vars:
+        file: private.yml           #this will be encrypted with the vault command
+
+
+    - name: create user
+      user:
+        name: "{{ user_name }}"
+        password: "{{ user_password | password_hash('sha512','AS343') }}"  # we provide the password through a variable "user_password"
+        update_password: on_create                                      
+        
+
+
+
+# ansible-vault create private.yml ==> create & encrypt the file 
+# ansible-playbook --ask-vault-pass -e "user_name=joe" create_new_user_using_vault.yml ==> run the playbook like this
+
+
+
+

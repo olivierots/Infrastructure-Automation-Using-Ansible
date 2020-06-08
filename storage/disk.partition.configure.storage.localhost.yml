@@ -1,0 +1,69 @@
+---
+- name: play1
+  hosts: 127.0.0.1
+  connection: local 
+  become: yes
+  gather_facts: false
+
+  tasks:
+    - name: partition 1
+      parted:
+        device: /dev/sdb
+        part_start: 0%
+        part_end: 50%
+        number: 1
+        state: present
+
+    - name: partition 2 
+      parted:
+        device: /dev/sdb
+        part_start: 50%
+        part_end: 100%
+        number: 2
+        state: present
+        flags: [ lvm ]  #used to create a vg and lv group from this
+ 
+    - name: create a volume group 
+      lvg:
+        vg: vg1
+        pvs: /dev/sdb2
+
+    - name: create a logical volume
+      lvol:
+        lv: lv1
+        vg: vg1
+        size: 100%FREE  
+        shrink: false #it will never deacrease in size
+
+    - name: create the xfs file system on /dev/sdb1
+      filesystem:
+        fstype: xfs
+        dev: /dev/sdb1
+          
+    - name: create the xfs file system on lv1
+      filesystem:
+        fstype: xfs
+        dev: /dev/vg1/lv1
+
+    - name: create mount points and directories to place the file systems 
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /data
+        - /data/sales
+        - /data/marketing
+
+    - name: mount the file system (sales)
+      mount:
+        path: /data/sales
+        scr: /dev/sdb1
+        fstype: xfs
+        state: mounted
+
+    - name: mount the marketing fs
+      mount:
+        path: /data/marketing
+        scr: /dev/vg1/lv1
+        fstype: xfs
+        state: mounted

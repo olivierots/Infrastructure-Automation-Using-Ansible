@@ -1,0 +1,17 @@
+---
+- name: play
+  hosts: 127.0.0.1 
+  connection: local
+  become: yes 
+  tasks:
+    - name: edit apache httpd.conf file and add the ServerName + port
+      lineinfile:                                
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^ServerName '                    
+        insertafter: '^#ServerName '             
+        line: "ServerName {{ ansible_fqdn }}:80"  
+
+    - name: copy motd.j2 file from current dir & copy it to /etc/ and rename it as  motd
+      template:
+        src: motd.j2
+        dest: /etc/motd

@@ -1,0 +1,16 @@
+192.168.1.85  ansible_connection=local
+
+[webservers]
+192.168.1.[85:87]
+
+[ubuntu]
+192.168.1.90
+
+[centos]
+192.168.1.234
+
+[uk:children]
+ubuntu
+centos
+
+

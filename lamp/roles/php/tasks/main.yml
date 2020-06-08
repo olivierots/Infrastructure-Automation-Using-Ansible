@@ -1,0 +1,14 @@
+---
+# tasks file for roles/php
+- name: install php
+  package:
+    name: php
+    state: latest
+  notify: restart_web
+  
+- name: index.php
+  copy:
+    src: index.php
+    dest: '/var/www/html/index.php'
+    mode: '640'
+    group: "{{ web_group }}"

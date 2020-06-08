@@ -1,0 +1,38 @@
+---
+  - name: play
+    hosts: all
+    become: true
+    gather_facts: false
+    
+    tasks:
+      - name: create a user account called oli
+        user:
+          name: oli
+          groups: wheel
+          password: "{{ 'Password1' | password_hash('sha512', 'SALT') }}"
+
+      - name: install some software
+        package:
+           name:
+             - at
+             - vim
+             - bash-completion
+             - nano
+             - tree
+             - pinfo
+             - firewalld
+           state: latest
+
+      - name: Authentication
+        lineinfile:
+          path: /etc/ssh/sshd_config
+          regexp: '^PasswordAuthentication'
+          line: 'PasswordAuthentication yes'
+          insertafter: '#PasswordAuthentication yes'
+        notify: restart_sshd
+
+    handlers: restart_ssh
+      - name: restart_sshd
+        systemd:
+           name: sshd
+           state: restarted

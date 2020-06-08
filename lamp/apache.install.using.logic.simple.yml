@@ -1,0 +1,16 @@
+---
+- name: apche installation 
+  hosts: all
+  tasks:
+    - name: Ubuntu apache installation 
+      apt:
+        name: apache2
+        state: latest
+      when: ansible_distribution == 'Ubuntu'  #only run on ubuntu distros
+
+    - name: Centos apache installation 
+      yum:
+        name: httpd
+        state: latest
+      when: ansible_distribution == 'CentOS'  #only run on centos distros
+
