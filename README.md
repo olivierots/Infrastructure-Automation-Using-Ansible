@@ -22,7 +22,9 @@ Below are some of the interesting fun stuffs i've done & learnt:
 
 some useful ansible ad-hoc commands i used & came accross for troubleshooting purposes :
 -ansible-playbook <playbook_name> --syntax-check: check for syntax & other errors in the playbook
+
 -ansible --version: shows you the version and main config file localtion
+
 -ansible-config view: show content of your .ansible.cfg file
 -ansible-config list: show all config 
 -ansible-config dump: show current config 
