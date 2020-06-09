@@ -10,13 +10,13 @@ A config mngt system, that's agentless (no agent software is needed in the manag
 to summarise, its basically an open source automation platform that makes your apps & systems easier to deploy, it can help you with config mngt, apps deployment & task automation
 ```
 ```
-Ansible limitations 
+Ansible limitations: 
 ansible cant install an OS, you'd have to do that with kickstart then use ansible to add packages etc
 ansible does not track what changes are made to files on a system, not does it track what user or process
 made those changes
 ```
 ```
-Ansible architecture 
+Ansible architecture:
 host inventory file: list of clients you're going to manage
 modules: ansible comes with 100s of modules that get executed when you run a playbook and taks include your modules
 ansible.cfg: main ansible config file that contains stuffs like your remote users, privileges & your inventory etc.
