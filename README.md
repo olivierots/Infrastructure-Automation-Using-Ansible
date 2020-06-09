@@ -33,6 +33,7 @@ Below are some of the interesting fun stuffs i've done & learnt:
 *  user accounts management 
 *  defining handlers refenced in playbooks
 *  working with files and templates
+*  kernel upgrade
 
 ## Useful commands ##
 some useful ansible ad-hoc commands i used & came accross for troubleshooting purposes :
