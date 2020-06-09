@@ -4,17 +4,20 @@ Automating the administration & configuration of LAMP using ansible
 Deployment of linux-based systems using ansible
 kernel patching using ansible
 ```
+
 ```
 Whats ansible ? 
 A config mngt system, that's agentless (no agent software is needed in the managed nodes). The software only need to be installed on the controller. using playbooks we can configure managed nodes to the desired state when ansible executes & leverages SSH to communicate between servers. Modules are programs that perform the actual work of the tasks of a play. 
 to summarise, its basically an open source automation platform that makes your apps & systems easier to deploy, it can help you with config mngt, apps deployment & task automation
 ```
+
 ```
 Ansible limitations: 
 ansible cant install an OS, you'd have to do that with kickstart then use ansible to add packages etc
 ansible does not track what changes are made to files on a system, not does it track what user or process
 made those changes
 ```
+
 ```
 Ansible architecture:
 host inventory file: list of clients you're going to manage
@@ -22,6 +25,7 @@ modules: ansible comes with 100s of modules that get executed when you run a pla
 ansible.cfg: main ansible config file that contains stuffs like your remote users, privileges & your inventory etc.
 Playbooks: describe automation jobs and playbook uses a very simple language YAML.
 ```
+
 ```
 My set up:
 2x centos VMs + 1x ubuntu VM. one master and two slaves. the master connect to the hosts using passwordless ssh. 
@@ -29,6 +33,7 @@ required packages needed on the crontroller:
 sudo yum install epel-release -y
 sudo yum install ansible -y 
 ```
+
 ```
 Projects:
 Below are some of the interesting fun stuffs i've done & learnt:
@@ -43,6 +48,7 @@ Below are some of the interesting fun stuffs i've done & learnt:
 *  working with files and templates
 *  kernel upgrade
 ```
+
 ```
 ## Useful commands i've learnt throughout my entire learning path ##
 some useful ansible ad-hoc commands i used & came accross for troubleshooting purposes :
