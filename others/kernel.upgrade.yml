@@ -1,0 +1,67 @@
+---
+- hosts: patching
+  become: true
+  become_user: root
+  tasks:
+          - name: Verify whether the app & the DB are running or not
+            shell: if ps -eaf| egrep 'httpd'| grep -v grep > /dev/null; then echo 'process_running'; else echo 'process_not_running'; fi
+            ignore_errors: true
+            register: appr_proc_check                   # the above output is saved in this variable 
+          - debug: msg="{{ appr_proc_check.stdout }}"   # standard output 
+          
+          
+          
+          - name: Decision point to start patching, if there are running apps then dont proceed using the fail module
+            fail:
+                    msg="{{ inventory_hostname }} has running applications, please stop first and then attempt patching"
+            when: appr_proc_check.stdout == "process_running"
+            
+            
+            
+          - name: copy the kernel patch repo file to start the upgrade. this file contains info such as yum repo, yum server, satellite server etc.
+            copy:
+                    src: /home/olivier/patching/kernel.repo
+                    dest: /etc/yum.repos.d/
+                    
+                    
+          - name: establish the current kernel version & put in a variable 
+            shell: uname -r
+            register: curr_ker
+            
+            
+          - name: initiate the patching
+            yum:
+                    name=kernel
+                    state=latest
+            register: yum_update
+          - debug: msg="kernel has been updated"
+            when: yum_update.rc == 0             # only display the above msg if the yum update has ran succesfully, rc is used for the                                                  # exit status e.g echo $?
+            
+            
+          - name: check if a reboot is required or not after the update 
+            shell: kernel_new=$(rpm -qa --last kernel | head -1| awk '{print $1}'| sed 's/kernel-//g'); kernel_now=$(uname -r); if [[ $kernel_new != $kernel_now ]]; then echo "reboot is required"; else echo "reboot is not required"; fi
+            ignore_errors: true
+            register: reboot_check
+          - debug: msg="{{ reboot_check.stdout }}"
+          
+           - name: reboot the system once the patching is complete
+             shell: "shutdown -r now"
+             async: 1                    #continue with the other task & fire the reboot task in the background to prevents comms breakd                                         #own between controller & slaves hence the use of async module 
+             poll: 0                     #fire,forget & move to next task, you do not need to wait for the task to complete 
+            
+            ## cant use the below because the ssh comms will be broken and your playbook will be terminated hence we sue the below
+            #- name: reboot the system once the patching is complete
+            #command: reboot 
+            #when: reboot_check.stdout == "reboot is required" 
+            
+            
+          - name: define the time ansible need to wait before the system comes up
+            pause:
+                    minutes: 1         #this will pretty much depend on your env, how long it has to wait, mine is one minute 
+            
+            
+          - name: display the new kernel version
+            shell: uname -r
+            register: new_ker
+          - debug: msg="New Kernel Version is {{ new_ker.stdout }} and old Kernel Version was {{ curr_ker.stdout }}"
+
