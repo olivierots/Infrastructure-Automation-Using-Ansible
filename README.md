@@ -66,3 +66,4 @@ some useful ansible ad-hoc commands i used & came accross for troubleshooting pu
 - ansible <group> -m yum -a “name= httpd state=absent”: Check if package is not installed
 ```  
 
+http://www.yamllint.com/ is a good tool that also checks for errors in your yaml files
