@@ -11,7 +11,7 @@ Whats ansible ?
 A config mngt system, that's agentless (no agent software is needed in the managed nodes). The software only need 
 to be installed on the controller. using playbooks we can configure managed nodes to the desired state when ansible 
 executes & leverages SSH to communicate between servers. Modules are programs that perform the actual work of the
-tasks of a play. 
+tasks of a play, Ansible executes each module, usually on the remote target node, and collects return values.. 
 to summarise, its basically an open source automation platform that makes your apps & systems easier to deploy, it
 can help you with config mngt, apps deployment & task automation.
 ```
@@ -27,6 +27,8 @@ made those changes
 Ansible architecture:
 host inventory file: list of clients you're going to manage
 modules: ansible comes with 100s of modules that get executed when you run a playbook and taks include your modules
+         They are reusable, standalone scripts that can be used by the Ansible API, or by ansible-playbook 
+         programs e.g yum, service, copy, lineinfile etc.
 ansible.cfg: main ansible config file that contains stuffs like your remote users, privileges & your inventory etc.
 Playbooks: describe automation jobs and playbook uses a very simple language YAML.
 ```
