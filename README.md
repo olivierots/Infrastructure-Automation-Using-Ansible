@@ -8,8 +8,12 @@ kernel patching using ansible
 
 ```
 Whats ansible ? 
-A config mngt system, that's agentless (no agent software is needed in the managed nodes). The software only need to be installed on the controller. using playbooks we can configure managed nodes to the desired state when ansible executes & leverages SSH to communicate between servers. Modules are programs that perform the actual work of the tasks of a play. 
-to summarise, its basically an open source automation platform that makes your apps & systems easier to deploy, it can help you with config mngt, apps deployment & task automation
+A config mngt system, that's agentless (no agent software is needed in the managed nodes). The software only need 
+to be installed on the controller. using playbooks we can configure managed nodes to the desired state when ansible 
+executes & leverages SSH to communicate between servers. Modules are programs that perform the actual work of the
+tasks of a play. 
+to summarise, its basically an open source automation platform that makes your apps & systems easier to deploy, it
+can help you with config mngt, apps deployment & task automation.
 ```
 
 ```
