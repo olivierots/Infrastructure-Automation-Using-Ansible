@@ -43,8 +43,9 @@ sudo yum install ansible -y
 ```
 
 ```
-Projects:
-Below are some of the interesting fun stuffs i've done & learnt:
+Tasks:
+Below are some of the interesting fun stuff i've done & learnt:
+
 *  configured & deployed apache web server to remote machines
 *  used ansible roles to install, configure & deploy PHP & MariaDB
 *  configured & proviosnned my AWS instance
@@ -58,7 +59,7 @@ Below are some of the interesting fun stuffs i've done & learnt:
 ```
 
 ```
-## Useful commands i've learnt throughout my entire learning path ##
+## below are some useful commands i've learnt & used throughout my learning path ##
 some useful ansible ad-hoc commands i used & came accross for troubleshooting purposes :
 - ansible-playbook <playbook_name> --syntax-check: check for syntax & other errors in the playbook
 - ansible --version: shows you the version and main config file localtion
