@@ -1,13 +1,13 @@
 =======
 ```
-Project description:
+## Project description ##
 Automating the administration & configuration of LAMP using ansible
 Deployment of linux-based systems using ansible
 kernel patching using ansible
 ```
 
 ```
-Whats ansible ? 
+## Whats ansible ? ##
 A config mngt system, that's agentless (no agent software is needed in the managed nodes). The software only need 
 to be installed on the controller. using playbooks we can configure managed nodes to the desired state when ansible 
 executes & leverages SSH to communicate between servers. Modules are programs that perform the actual work of the
@@ -17,20 +17,21 @@ can help you with config mngt, apps deployment & task automation.
 ```
 
 ```
-Ansible limitations: 
+## Ansible limitations: ##
 ansible cant install an OS, you'd have to do that with kickstart then use ansible to add packages etc
 ansible does not track what changes are made to files on a system, not does it track what user or process
 made those changes
 ```
 
 ```
-Ansible architecture:
-host inventory file: list of clients you're going to manage
-modules: ansible comes with 100s of modules that get executed when you run a playbook and taks include your modules
-         They are reusable, standalone scripts that can be used by the Ansible API, or by ansible-playbook 
-         programs e.g yum, service, copy, lineinfile etc.
-ansible.cfg: main ansible config file that contains stuffs like your remote users, privileges & your inventory etc.
-Playbooks: describe automation jobs and playbook uses a very simple language YAML.
+## Ansible architecture ##
+* host inventory file: list of clients you're going to manage
+* modules: ansible comes with 100s of modules that get executed when you run a playbook and taks include your modules
+           They are reusable, standalone scripts that can be used by the Ansible API, or by ansible-playbook 
+           programs e.g yum, service, copy, lineinfile etc.
+* ansible.cfg: main ansible config file that contains stuffs like your remote users, privileges & your inventory etc.
+* playbooks: describe automation jobs and playbook uses a very simple language YAML.
+* roles: roles are ways of splitting ansible tasks into files which are easier to manipulate with. 
 ```
 
 ```
