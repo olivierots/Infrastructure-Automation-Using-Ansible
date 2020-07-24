@@ -1,13 +1,13 @@
 =======
 ```
-## Project description ##
+=== Project description ===
 Automating the administration & configuration of LAMP using ansible
 Deployment of linux-based systems using ansible
 kernel patching using ansible
 ```
 
 ```
-## Whats ansible ? ##
+=== Whats ansible ? ===
 A config mngt system, that's agentless (no agent software is needed in the managed nodes). The software only need 
 to be installed on the controller. using playbooks we can configure managed nodes to the desired state when ansible 
 executes & leverages SSH to communicate between servers. Modules are programs that perform the actual work of the
@@ -17,14 +17,14 @@ can help you with config mngt, apps deployment & task automation.
 ```
 
 ```
-## Ansible limitations: ##
+=== Ansible limitations ===
 ansible cant install an OS, you'd have to do that with kickstart then use ansible to add packages etc
-ansible does not track what changes are made to files on a system, not does it track what user or process
+ansible does not track what changes are made to files on a system, nor does it track what user or process
 made those changes
 ```
 
 ```
-## Ansible architecture ##
+=== Ansible architecture ===
 * host inventory file: list of clients you're going to manage
 * modules: ansible comes with 100s of modules that get executed when you run a playbook and taks include your modules
            They are reusable, standalone scripts that can be used by the Ansible API, or by ansible-playbook 
@@ -43,7 +43,7 @@ sudo yum install ansible -y
 ```
 
 ```
-Tasks:
+=== Tasks ===
 Below are some of the interesting fun stuff i've done & learnt:
 
 *  configured & deployed apache web server to remote machines
@@ -59,7 +59,7 @@ Below are some of the interesting fun stuff i've done & learnt:
 ```
 
 ```
-## below are some useful commands i've learnt & used throughout my learning path ##
+=== below are some useful commands i've learnt & used throughout my learning path ===
 some useful ansible ad-hoc commands i used & came accross for troubleshooting purposes :
 - ansible-playbook <playbook_name> --syntax-check: check for syntax & other errors in the playbook
 - ansible --version: shows you the version and main config file localtion
