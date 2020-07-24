@@ -35,7 +35,7 @@ made those changes
 ```
 
 ```
-My set up:
+== My set up ==
 2x centos VMs + 1x ubuntu VM. one master and two slaves. the master connect to the hosts using passwordless ssh. 
 required packages needed on the crontroller:
 sudo yum install epel-release -y
